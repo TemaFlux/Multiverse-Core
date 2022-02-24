@@ -43,11 +43,20 @@ public class MVPlayerListener implements Listener {
     private final PermissionTools pt;
 
     private final Map<String, String> playerWorld = new ConcurrentHashMap<String, String>();
+    private final Material netherPortal;
 
     public MVPlayerListener(MultiverseCore plugin) {
         this.plugin = plugin;
         worldManager = plugin.getMVWorldManager();
         pt = new PermissionTools(plugin);
+        
+        Material tmp;
+        try {
+        	tmp = Material.valueOf("NETHER_PORTAL");
+        } catch (Exception | Error e) {
+        	tmp = Material.PORTAL;
+        }
+        netherPortal = tmp;
     }
 
     /**
@@ -162,7 +171,8 @@ public class MVPlayerListener implements Listener {
      * This method is called when a player teleports anywhere.
      * @param event The Event that was fired.
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void playerTeleport(PlayerTeleportEvent event) {
         Logging.finer("Got teleport event for player '"
                 + event.getPlayer().getName() + "' with cause '" + event.getCause() + "'");
@@ -260,7 +270,7 @@ public class MVPlayerListener implements Listener {
 
         // REMEMBER! getTo MAY be NULL HERE!!!
         // If the player was actually outside of the portal, adjust the from location
-        if (event.getFrom().getWorld().getBlockAt(event.getFrom()).getType() != Material.NETHER_PORTAL) {
+        if (event.getFrom().getWorld().getBlockAt(event.getFrom()).getType() != netherPortal) {
             Location newloc = this.plugin.getSafeTTeleporter().findPortalBlockNextTo(event.getFrom());
             // TODO: Fix this. Currently, we only check for PORTAL blocks. I'll have to figure out what
             // TODO: we want to do here.

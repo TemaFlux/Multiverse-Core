@@ -1125,7 +1125,8 @@ public class MultiverseCore extends JavaPlugin implements MVPlugin, Core {
      * @param generator The Custom generator plugin to use.
      * @return True if success, false if fail.
      */
-    public Boolean cloneWorld(String oldName, String newName, String generator) {
+    @SuppressWarnings("deprecation")
+	public Boolean cloneWorld(String oldName, String newName, String generator) {
         return this.worldManager.cloneWorld(oldName, newName, generator);
     }
 

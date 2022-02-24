@@ -37,7 +37,8 @@ public class RegenCommand extends MultiverseCommand {
                 + ChatColor.RED + "PERMANENTLY.", PermissionDefault.OP);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void runCommand(CommandSender sender, List<String> args) {
         String worldName = args.get(0);
         boolean useseed = (!(args.size() == 1));

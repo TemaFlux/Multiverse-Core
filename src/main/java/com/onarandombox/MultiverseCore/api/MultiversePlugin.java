@@ -18,6 +18,7 @@ import com.pneumaticraft.commandhandler.CommandHandler;
 /**
  * Make things easier for MV-Plugins!
  */
+@SuppressWarnings("deprecation")
 public abstract class MultiversePlugin extends JavaPlugin implements MVPlugin {
     private MultiverseCore core;
     /**

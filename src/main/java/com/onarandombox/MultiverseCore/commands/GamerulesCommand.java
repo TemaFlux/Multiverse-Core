@@ -11,9 +11,11 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.display.ColorAlternator;
 import com.onarandombox.MultiverseCore.display.ContentDisplay;
 import com.onarandombox.MultiverseCore.display.settings.MapDisplaySettings;
+
+import me.temaflux.multiversecore.libs.org.bukkit.GameRule;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -83,7 +85,7 @@ public class GamerulesCommand extends MultiverseCommand {
     private Map<String, Object> getGameRuleMap(World world) {
         Map<String, Object> gameRuleMap = new HashMap<>();
         for (GameRule<?> rule : GameRule.values()) {
-            Object value = world.getGameRuleValue(rule);
+            Object value = world.getGameRuleValue(rule.getName());
             if (value == null) {
                 gameRuleMap.put(rule.getName(), "null");
                 continue;

@@ -17,8 +17,10 @@ import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.onarandombox.MultiverseCore.api.SafeTTeleporter;
 import com.onarandombox.MultiverseCore.api.WorldPurger;
 import com.onarandombox.MultiverseCore.event.MVWorldDeleteEvent;
+
+import me.temaflux.multiversecore.libs.org.bukkit.GameRule;
+
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -48,7 +50,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -939,8 +940,8 @@ public class WorldManager implements MVWorldManager {
             World CBWorld = world.getCBWorld();
             for (GameRule<?> gameRule : GameRule.values()) {
                 // Only save if not default value.
-                Object value = CBWorld.getGameRuleValue(gameRule);
-                if (value != CBWorld.getGameRuleDefault(gameRule)) {
+                Object value = CBWorld.getGameRuleValue(gameRule.getName());
+                if (value != "false" /*CBWorld.getGameRuleDefault(gameRule)*/) {
                     gameRuleMap.put(gameRule, value);
                 }
             }
@@ -983,7 +984,7 @@ public class WorldManager implements MVWorldManager {
 
     private <T> boolean setGameRuleValue(World world, GameRule<T> gameRule, Object value) {
         try {
-            return world.setGameRule(gameRule, (T) value);
+            return world.setGameRuleValue(gameRule.getName(), value + "");
         } catch (Exception e) {
             return false;
         }

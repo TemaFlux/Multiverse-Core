@@ -40,7 +40,8 @@ public class BedDestination implements MVDestination {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean isThisType(JavaPlugin plugin, String destination) {
         String[] split = destination.split(":");
         boolean validFormat = split.length >= 1 && split.length <= 2 && split[0].equals(this.getIdentifier());
@@ -58,7 +59,8 @@ public class BedDestination implements MVDestination {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public Location getLocation(Entity entity) {
         if (entity instanceof Player) {
             if (this.playername.isEmpty())

@@ -78,9 +78,10 @@ public class MVVersionEvent extends Event {
     private String readFile(final String filename) {
         StringBuilder result;
 
+        BufferedReader bufferedReader = null;
         try {
             FileReader reader = new FileReader(filename);
-            BufferedReader bufferedReader = new BufferedReader(reader);
+            bufferedReader = new BufferedReader(reader);
             String line;
             result = new StringBuilder();
             while ((line = bufferedReader.readLine()) != null) {
@@ -94,6 +95,12 @@ public class MVVersionEvent extends Event {
             Logging.severe("Something bad happend when reading %s. Here's the traceback: %s", filename, e.getMessage());
             e.printStackTrace();
             result = new StringBuilder(String.format("ERROR: Could not load: %s", filename));
+        }
+        
+        if (bufferedReader != null) {
+        	try {
+        		bufferedReader.close();
+        	} catch (Exception | Error e) {}
         }
 
         return result.toString();

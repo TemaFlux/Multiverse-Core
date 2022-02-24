@@ -36,7 +36,7 @@
         </repository>
     </repositories>
 
-    <pluginRepositories>
+    <!-- <pluginRepositories>
         <pluginRepository>
             <id>doodleproject-repo</id>
             <name>DoodleProject Maven 2 Repository</name>
@@ -45,7 +45,7 @@
                 <enabled>true</enabled>
             </releases>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories> -->
 
     <ciManagement>
         <system>jenkins</system>
@@ -276,13 +276,68 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									com.google.code.maven-replacer-plugin
+        								</groupId>
+        								<artifactId>
+        									maven-replacer-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.4.1,)
+        								</versionRange>
+        								<goals>
+        									<goal>replace</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>se.eris</groupId>
+        								<artifactId>
+        									notnull-instrumenter-maven-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.0.0,)
+        								</versionRange>
+        								<goals>
+        									<goal>
+        										tests-instrument
+        									</goal>
+        									<goal>instrument</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
         <dependency>
            <groupId>org.bukkit</groupId>
            <artifactId>bukkit</artifactId>
-           <version>1.13.2-R0.1-SNAPSHOT</version>
+           <version>1.12.2-R0.1-SNAPSHOT</version>
            <scope>provided</scope>
         </dependency>
         <!-- SerializationConfig Dependency -->

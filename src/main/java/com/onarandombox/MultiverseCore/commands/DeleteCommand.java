@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +32,8 @@ public class DeleteCommand extends MultiverseCommand {
         this.setPermission("multiverse.core.delete", "Deletes a world on your server. " + ChatColor.RED + "PERMANENTLY.", PermissionDefault.OP);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void runCommand(CommandSender sender, List<String> args) {
         String worldName = args.get(0);
 

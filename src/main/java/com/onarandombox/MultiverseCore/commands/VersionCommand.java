@@ -80,7 +80,7 @@ public class VersionCommand extends MultiverseCommand {
                 + "[Multiverse-Core] Special Code: FRN002" + '\n';
     }
 
-    private String getMarkdownString() {
+    public String getMarkdownString() {
         return "# Multiverse-Core" + '\n'
                 + "## Overview" + '\n'
                 + "| Name | Value |" + '\n'

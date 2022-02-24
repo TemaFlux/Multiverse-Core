@@ -24,7 +24,8 @@ class BitlyURLShortener extends URLShortener {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     String encodeData(String data) {
         JSONObject json = new JSONObject();
         json.put("domain", "j.mp");

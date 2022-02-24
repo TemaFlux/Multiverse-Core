@@ -4,7 +4,9 @@ package com.onarandombox.MultiverseCore.display;
  * Thrown when an issue occur while formatting content.
  */
 public class DisplayFormatException extends Exception {
-    public DisplayFormatException() {
+	private static final long serialVersionUID = 1L;
+
+	public DisplayFormatException() {
     }
 
     public DisplayFormatException(String message) {

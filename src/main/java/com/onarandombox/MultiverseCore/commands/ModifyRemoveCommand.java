@@ -45,7 +45,8 @@ public class ModifyRemoveCommand extends MultiverseCommand {
         this.worldManager = this.plugin.getMVWorldManager();
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void runCommand(CommandSender sender, List<String> args) {
         // We NEED a world from the command line
         Player p = null;

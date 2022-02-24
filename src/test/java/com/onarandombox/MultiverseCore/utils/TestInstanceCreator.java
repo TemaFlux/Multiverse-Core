@@ -51,6 +51,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("deprecation")
 public class TestInstanceCreator {
     private MultiverseCore core;
     private Server mockServer;

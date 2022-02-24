@@ -20,7 +20,6 @@ import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Golem;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Squid;
@@ -38,12 +37,13 @@ public class SimpleWorldPurger implements WorldPurger {
 
     private Class<Entity> ambientClass = null;
 
-    public SimpleWorldPurger(MultiverseCore plugin) {
+    @SuppressWarnings("unchecked")
+	public SimpleWorldPurger(MultiverseCore plugin) {
         this.plugin = plugin;
         try {
-            Class entityClass = Class.forName("org.bukkit.entity.Ambient");
+            Class<?> entityClass = Class.forName("org.bukkit.entity.Ambient");
             if (Entity.class.isAssignableFrom(entityClass)) {
-                ambientClass = entityClass;
+                ambientClass = (Class<Entity>) entityClass;
             }
         } catch (ClassNotFoundException ignore) { }
     }
@@ -135,7 +135,8 @@ public class SimpleWorldPurger implements WorldPurger {
         }
     }
 
-    private boolean killDecision(Entity e, List<String> thingsToKill, boolean negateAnimals,
+    @SuppressWarnings("deprecation")
+	private boolean killDecision(Entity e, List<String> thingsToKill, boolean negateAnimals,
             boolean negateMonsters, boolean specifiedAnimals, boolean specifiedMonsters) {
         boolean negate = false;
         boolean specified = false;
@@ -149,7 +150,7 @@ public class SimpleWorldPurger implements WorldPurger {
             if (specifiedAnimals)
                 specified = true;
             negate = negateAnimals;
-        } else if (e instanceof Monster || e instanceof Ghast || e instanceof Slime || e instanceof Phantom) {
+        } else if (e instanceof Monster || e instanceof Ghast || e instanceof Slime || e.getType().name().equalsIgnoreCase("Phantom")) {
             // it's a monster
             if (specifiedMonsters && !negateMonsters) {
                 Logging.finest("Removing an entity because I was told to remove all monsters in world %s: %s", e.getWorld().getName(), e);
@@ -196,4 +197,8 @@ public class SimpleWorldPurger implements WorldPurger {
     public void purgeWorld(MultiverseWorld mvworld, List<String> thingsToKill, boolean negateAnimals, boolean negateMonsters) {
         purgeWorld(mvworld, thingsToKill, negateAnimals, negateMonsters, null);
     }
+    
+    public MultiverseCore getPlugin() {
+		return plugin;
+	}
 }

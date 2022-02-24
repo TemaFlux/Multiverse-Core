@@ -21,7 +21,6 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Multiverse's {@link PermissionsInterface}.
@@ -280,14 +279,14 @@ public class MVPermissions implements PermissionsInterface {
      * @return True if they have any parent perm, false if none.
      */
     // TODO remove this...?
-    private boolean hasAnyParentPermission(CommandSender sender, String node) {
-        String parentPerm = this.pullOneLevelOff(node);
+    public boolean hasAnyParentPermission(CommandSender sender, String node) {
+        String parentPerm = pullOneLevelOff(node);
         // Base case
         if (parentPerm == null) {
             return false;
         }
         // If they have a parent, they're good
-        if (this.checkActualPermission(sender, parentPerm + ".*")) {
+        if (checkActualPermission(sender, parentPerm + ".*")) {
             return true;
         }
         return hasAnyParentPermission(sender, parentPerm);

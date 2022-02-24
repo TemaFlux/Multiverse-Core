@@ -24,8 +24,6 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
-import java.util.logging.Level;
-
 /**
  * Multiverse's Entity {@link Listener}.
  */
@@ -79,7 +77,8 @@ public class MVEntityListener implements Listener {
      * Handle Animal/Monster Spawn settings, seems like a more concrete method than using CraftBukkit.
      * @param event The event.
      */
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
         // Check to see if the Creature is spawned by a plugin, we don't want to prevent this behaviour.
         // TODO: Allow the egg thing to be a config param. Doubt this will be per world; seems silly.

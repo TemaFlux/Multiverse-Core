@@ -8,9 +8,11 @@
 package com.onarandombox.MultiverseCore.commands;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
+
+import me.temaflux.multiversecore.libs.org.bukkit.GameRule;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,7 +58,7 @@ public class GameruleCommand extends MultiverseCommand {
             return;
         }
 
-        final GameRule gameRule = GameRule.getByName(args.get(0));
+        final GameRule<?> gameRule = GameRule.getByName(args.get(0));
         final String value = args.get(1);
         final World world;
         if (args.size() == 2) {
@@ -85,13 +87,13 @@ public class GameruleCommand extends MultiverseCommand {
                     return;
                 }
 
-                if (!world.setGameRule(gameRule, booleanValue)) {
+                if (!world.setGameRuleValue(gameRule.getName(), booleanValue ? "true" : "false")) {
                     sender.sendMessage(getErrorMessage(gameRule.getName(), value) + "something went wrong.");
                     return;
                 }
             } else if (gameRule.getType() == Integer.class) {
                 try {
-                    if (!world.setGameRule(gameRule, Integer.parseInt(value))) {
+                    if (!world.setGameRuleValue(gameRule.getName(), value)) {
                         throw new NumberFormatException();
                     }
                 } catch (NumberFormatException e) {
@@ -109,7 +111,8 @@ public class GameruleCommand extends MultiverseCommand {
         }
     }
 
-    private String getErrorMessage(String gameRule, String value) {
+    @SuppressWarnings("unused")
+	private String getErrorMessage(String gameRule, String value) {
         return ChatColor.RED + "Failure!" + ChatColor.WHITE + " Gamerule " + ChatColor.AQUA + gameRule
                 + ChatColor.WHITE + " could not be set to " + ChatColor.RED + value + ChatColor.WHITE + ", ";
     }

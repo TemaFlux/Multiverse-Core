@@ -26,7 +26,7 @@ public abstract class MultiverseCoreListener implements Listener {
      * @param event The event.
      */
     @EventHandler
-    public void worldPropertyChange(MVWorldPropertyChangeEvent event) {
+    public void worldPropertyChange(MVWorldPropertyChangeEvent<?> event) {
     }
 
     /**

@@ -31,7 +31,8 @@ public class ConfirmCommand extends MultiverseCommand {
 
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void runCommand(CommandSender sender, List<String> args) {
         this.plugin.getCommandQueueManager().runQueuedCommand(sender);
     }

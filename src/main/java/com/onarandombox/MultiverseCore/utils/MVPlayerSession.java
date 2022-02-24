@@ -43,4 +43,12 @@ public class MVPlayerSession {
         long time = (new Date()).getTime();
         return ((time - this.teleportLast) > this.config.getTeleportCooldown());
     }
+    
+    public Player getPlayer() {
+		return player;
+	}
+    
+    public long getMessageLast() {
+		return messageLast;
+	}
 }

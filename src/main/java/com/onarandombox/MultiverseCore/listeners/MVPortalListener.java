@@ -19,17 +19,32 @@ import org.bukkit.event.entity.EntityCreatePortalEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
-import java.util.logging.Level;
-
 /**
  * A custom listener for portal related events.
  */
 public class MVPortalListener implements Listener {
 
     private MultiverseCore plugin;
+    private final Material enderPortalFrame;
+    private final Material enderEye;
 
     public MVPortalListener(MultiverseCore core) {
         this.plugin = core;
+        
+        Material tmp;
+        try {
+        	tmp = Material.valueOf("END_PORTAL_FRAME");
+        } catch (Exception | Error e) {
+        	tmp = Material.ENDER_PORTAL_FRAME;
+        }
+        enderPortalFrame = tmp;
+        
+        try {
+        	tmp = Material.valueOf("ENDER_EYE");
+        } catch (Exception | Error e) {
+        	tmp = Material.EYE_OF_ENDER;
+        }
+        enderEye = tmp;
     }
 
     /**
@@ -72,10 +87,10 @@ public class MVPortalListener implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-        if (event.getClickedBlock().getType() != Material.END_PORTAL_FRAME) {
+        if (event.getClickedBlock().getType() != enderPortalFrame) {
             return;
         }
-        if (event.getItem() == null || event.getItem().getType() != Material.ENDER_EYE) {
+        if (event.getItem() == null || event.getItem().getType() != enderEye) {
             return;
         }
         MultiverseWorld world = this.plugin.getMVWorldManager().getMVWorld(event.getPlayer().getWorld());

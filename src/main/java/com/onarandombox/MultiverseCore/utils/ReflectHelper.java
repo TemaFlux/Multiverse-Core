@@ -79,7 +79,8 @@ public class ReflectHelper {
      * @param <R>           The return type.
      * @return Return value of the method call if any, else null.
      */
-    @Nullable
+    @SuppressWarnings("unchecked")
+	@Nullable
     public static <C, R> R invokeMethod(C classInstance, Method method, Object...parameters) {
         try {
             return (R) method.invoke(classInstance, parameters);
@@ -129,7 +130,8 @@ public class ReflectHelper {
      * @param <V>           The field value type.
      * @return The field value if any, else null.
      */
-    @Nullable
+    @SuppressWarnings("unchecked")
+	@Nullable
     public static <C, V> V getFieldValue(C classInstance, Field field)  {
         try {
             return (V) field.get(classInstance);

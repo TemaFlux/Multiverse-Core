@@ -13,9 +13,9 @@ import com.onarandombox.MultiverseCore.api.Core;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Bed;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Vehicle;
 
@@ -152,17 +152,17 @@ public class SimpleBlockSafety implements BlockSafety {
      * @return The location of the other bed piece, or null if it was a jacked up bed.
      */
     private Location findOtherBedPiece(Location checkLoc) {
-        BlockData data = checkLoc.getBlock().getBlockData();
+        Block data = checkLoc.getBlock();
         if (!(data instanceof Bed)) {
             return null;
         }
         Bed b = (Bed) data;
 
-        if (b.getPart() == Bed.Part.HEAD) {
-            return checkLoc.getBlock().getRelative(b.getFacing().getOppositeFace()).getLocation();
-        }
+//        if (b.getPart() == Bed.Part.HEAD) {
+//            return checkLoc.getBlock().getRelative(b.getFacing().getOppositeFace()).getLocation();
+//        }
         // We shouldn't ever be looking at the foot, but here's the code for it.
-        return checkLoc.getBlock().getRelative(b.getFacing()).getLocation();
+        return checkLoc.getBlock().getRelative(checkLoc.getBlock().getFace(b.getBlock())).getLocation();
     }
 
 
@@ -213,7 +213,8 @@ public class SimpleBlockSafety implements BlockSafety {
         Material currentBlock = l.getBlock().getType();
         return (currentBlock == Material.POWERED_RAIL
                 || currentBlock == Material.DETECTOR_RAIL
-                || currentBlock == Material.RAIL
+                || currentBlock.name().equalsIgnoreCase("RAIL")
+                || currentBlock.name().equalsIgnoreCase("RAILS")
                 || currentBlock == Material.ACTIVATOR_RAIL);
     }
 

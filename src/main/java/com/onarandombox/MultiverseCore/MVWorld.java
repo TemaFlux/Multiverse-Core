@@ -28,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldType;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
@@ -41,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 
 /**
  * The implementation of a Multiverse handled world.
@@ -1205,7 +1203,8 @@ public class MVWorld implements MultiverseWorld {
         this.props.setAllowFlight(allowFlight);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public String toString() {
         final JSONObject jsonData = new JSONObject();
         jsonData.put("Name", getName());

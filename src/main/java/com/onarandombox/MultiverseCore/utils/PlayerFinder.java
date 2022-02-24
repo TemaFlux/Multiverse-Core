@@ -3,6 +3,8 @@ package com.onarandombox.MultiverseCore.utils;
 import com.dumptruckman.minecraft.util.Logging;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -85,7 +88,8 @@ public class PlayerFinder {
      * @param playerName    Name of a {@link Player}.
      * @return The player if found, else null.
      */
-    @Nullable
+    @SuppressWarnings("deprecation")
+	@Nullable
     public static Player getByName(@NotNull String playerName) {
         return Bukkit.getPlayerExact(playerName);
     }
@@ -161,8 +165,9 @@ public class PlayerFinder {
         if (playerSelector.charAt(0) != '@') {
             return null;
         }
+        
         try {
-            return Bukkit.selectEntities(sender, playerSelector).stream()
+            return selectEntities(sender, playerSelector).stream()
                     .filter(e -> e instanceof Player)
                     .map(e -> ((Player) e))
                     .collect(Collectors.toList());
@@ -173,4 +178,47 @@ public class PlayerFinder {
             return null;
         }
     }
+
+	public static List<Entity> selectEntities(CommandSender sender, String playerSelector) {
+		final Entity e = (Entity) sender;
+		final String selector = playerSelector.split("[")[0];
+		final String data = playerSelector.replace(selector, "");
+		
+		if (selector.equalsIgnoreCase("@p")) {
+			return e.getNearbyEntities(30, 30, 30).stream().filter(entity -> entity instanceof Player).limit(getValue(data, "limit", 1)).collect(Collectors.toList());
+		}
+		else if (selector.equalsIgnoreCase("@r")) {
+			return e.getWorld().getEntities().stream()
+			.filter(entity -> entity instanceof Player)
+			.sorted((o1, o2) -> ThreadLocalRandom.current().nextInt(-1, 2))
+			.limit(getValue(data, "limit", 1)).collect(Collectors.toList());
+		}
+		else if (selector.equalsIgnoreCase("@a")) return e.getWorld().getEntities().stream().filter(entity -> entity instanceof Player).collect(Collectors.toList());
+		else if (selector.equalsIgnoreCase("@e")) {
+			final EntityType type;
+			
+			EntityType tmp = null;
+			try {
+				tmp = EntityType.valueOf(getValue(data, "type", ""));
+			} catch (Exception | Error ex) {}
+			type = tmp;
+			
+			return e.getWorld().getEntities().stream().filter(entity -> type == null || entity.getType() == type).collect(Collectors.toList());
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T getValue(String data, String name, T defValue) {
+		String parsed = null;
+		try {
+			parsed = data.split(name + "=")[1].split(",")[0];
+		} catch (Exception | Error ex) {}
+		
+		if (parsed == null) return defValue;
+		
+		T result = defValue;
+		if (defValue instanceof Integer) result = (T) Integer.valueOf(parsed);
+		return result;
+	}
 }

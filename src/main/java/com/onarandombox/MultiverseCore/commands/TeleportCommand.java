@@ -28,7 +28,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +51,8 @@ public class TeleportCommand extends MultiverseCommand {
 
     private static final int UNSAFE_TELEPORT_EXPIRE_DELAY = 15;
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void runCommand(CommandSender sender, List<String> args) {
         CommandSender teleporter = sender;
         Player teleportee = null;

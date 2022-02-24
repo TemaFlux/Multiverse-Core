@@ -59,4 +59,8 @@ public class TestEntryFeeConversion {
         props = new WorldProperties(config);
         assertEquals(Material.STONE, props.entryfee.getCurrency());
     }
+    
+    public MultiverseCore getCore() {
+		return core;
+	}
 }

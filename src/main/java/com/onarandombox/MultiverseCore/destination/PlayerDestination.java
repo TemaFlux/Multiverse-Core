@@ -48,7 +48,8 @@ public class PlayerDestination implements MVDestination {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public Location getLocation(Entity e) {
         Player p = plugin.getServer().getPlayerExact(this.player);
         Player plLoc = null;

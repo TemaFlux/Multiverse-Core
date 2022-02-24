@@ -251,9 +251,9 @@ public class MVEconomist {
             showReceipt(player, (amount * -1), type);
         }
 
-        private static void takeItem(Player player, double amount, Material type) {
+		private static void takeItem(Player player, double amount, Material type) {
             int removed = 0;
-            HashMap<Integer, ItemStack> items = (HashMap<Integer, ItemStack>) player.getInventory().all(type);
+            HashMap<Integer, ? extends ItemStack> items = player.getInventory().all(type);
             for (int i : items.keySet()) {
                 if (removed >= amount) {
                     break;

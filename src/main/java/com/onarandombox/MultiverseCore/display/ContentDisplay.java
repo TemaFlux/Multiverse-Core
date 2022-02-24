@@ -141,7 +141,8 @@ public class ContentDisplay<T> {
      * @param <S>       The setting type.
      * @return Value set for the given setting.
      */
-    public <S> S getSetting(@NotNull DisplaySetting<S> setting) {
+    @SuppressWarnings("unchecked")
+	public <S> S getSetting(@NotNull DisplaySetting<S> setting) {
         return (S) settingsMap.getOrDefault(setting, setting.defaultValue());
     }
 

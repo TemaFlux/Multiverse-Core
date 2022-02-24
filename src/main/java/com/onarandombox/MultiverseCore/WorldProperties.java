@@ -90,7 +90,7 @@ public class WorldProperties extends SerializationConfig {
 
     void setMVWorld(MVWorld world) {
         registerObjectUsing(world);
-        registerGlobalValidator(new WorldPropertyValidator());
+        registerGlobalValidator(new WorldPropertyValidator<>());
     }
 
     /**
@@ -121,7 +121,8 @@ public class WorldProperties extends SerializationConfig {
             return from.toString();
         }
 
-        @Override
+        @SuppressWarnings("deprecation")
+		@Override
         public Difficulty deserialize(String serialized, Class<Difficulty> wanted) throws IllegalPropertyValueException {
             try {
                 return Difficulty.getByValue(Integer.parseInt(serialized));
@@ -144,7 +145,8 @@ public class WorldProperties extends SerializationConfig {
             return from.toString();
         }
 
-        @Override
+        @SuppressWarnings("deprecation")
+		@Override
         public GameMode deserialize(String serialized, Class<GameMode> wanted) throws IllegalPropertyValueException {
             try {
                 return GameMode.getByValue(Integer.parseInt(serialized));
@@ -303,7 +305,8 @@ public class WorldProperties extends SerializationConfig {
     // End of properties
     // --------------------------------------------------------------
 
-    void setValidator(String fieldName, Validator validator) {
+    @SuppressWarnings("rawtypes")
+	void setValidator(String fieldName, Validator validator) {
         registerValidator(fieldName, validator);    //To change body of overridden methods use File | Settings | File Templates.
     }
 

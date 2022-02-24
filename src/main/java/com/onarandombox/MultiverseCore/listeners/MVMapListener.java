@@ -16,20 +16,31 @@ import org.bukkit.map.MapView;
 public class MVMapListener implements Listener {
 
     private final MultiverseCore plugin;
+    private final Material filledMap;
 
     public MVMapListener(final MultiverseCore plugin) {
         this.plugin = plugin;
+        
+        Material tmp;
+        try {
+        	tmp = Material.valueOf("FILLED_MAP");
+        } catch (Exception e) {
+        	tmp = Material.MAP;
+        }
+        
+        filledMap = tmp;
     }
 
     /**
      * This method is called when a map is initialized.
      * @param event The event that was fired.
      */
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void mapInitialize(final MapInitializeEvent event) {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             if ((player.getItemInHand().getType() == Material.MAP
-                    || player.getItemInHand().getType() == Material.FILLED_MAP)
+                    || player.getItemInHand().getType() == filledMap)
                     && player.getItemInHand().getDurability() == event.getMap().getId()) {
                 final Location playerLoc = player.getLocation();
                 final MapView map = event.getMap();
@@ -40,4 +51,8 @@ public class MVMapListener implements Listener {
             }
         }
     }
+    
+    public MultiverseCore getPlugin() {
+		return plugin;
+	}
 }

@@ -38,7 +38,8 @@ class GitHubPasteService extends PasteService {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     String encodeData(Map<String, String> files) {
         JSONObject root = new JSONObject();
         root.put("description", "Multiverse-Core Debug Info");

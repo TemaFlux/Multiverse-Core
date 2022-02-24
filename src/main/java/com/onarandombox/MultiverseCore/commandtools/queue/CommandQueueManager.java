@@ -11,7 +11,7 @@ import com.dumptruckman.minecraft.util.Logging;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.block.data.type.CommandBlock;
+import org.bukkit.block.CommandBlock;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitTask;
@@ -156,6 +156,6 @@ public class CommandQueueManager {
      */
     private boolean isCommandBlock(@NotNull CommandSender sender) {
         return sender instanceof BlockCommandSender
-                && ((BlockCommandSender) sender).getBlock().getBlockData() instanceof CommandBlock;
+                && ((BlockCommandSender) sender).getBlock() instanceof CommandBlock;
     }
 }

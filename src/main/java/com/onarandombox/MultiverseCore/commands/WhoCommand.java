@@ -52,7 +52,7 @@ public class WhoCommand extends MultiverseCommand {
             showAll = false;
         }
 
-        final Collection onlinePlayers = plugin.getServer().getOnlinePlayers();
+        final Collection<? extends Player> onlinePlayers = plugin.getServer().getOnlinePlayers();
         final Collection<Player> visiblePlayers = new HashSet<Player>(onlinePlayers.size());
         for (final Object player : onlinePlayers) {
             if (player instanceof Player && (p == null || p.canSee((Player) player))) {
@@ -78,7 +78,7 @@ public class WhoCommand extends MultiverseCommand {
 
                 sender.sendMessage(String.format("%s--- Players in %s%s ---", ChatColor.AQUA,
                         world.getColoredWorldString(), ChatColor.AQUA));
-                sender.sendMessage(this.buildPlayerString(world, p, visiblePlayers));
+                sender.sendMessage(buildPlayerString(world, p, visiblePlayers));
                 return;
             }
         }
